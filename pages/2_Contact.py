@@ -52,3 +52,10 @@ with col2:
 st.markdown("---")
 
 st.info("For academic queries or project-related discussions, please contact using the details above.")
+
+st.markdown("""
+<hr>
+<div style="text-align:center; color:gray;">
+© 2026 Data Xtraction & Analysis System | TYBSc Computer Science Project
+</div>
+""", unsafe_allow_html=True)

@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import io
 
-st.set_page_config(page_title="Visualization", layout="wide")
+st.set_page_config(page_title="📈 Visualization", layout="wide")
 
 st.title("📈 Data Visualization")
 
