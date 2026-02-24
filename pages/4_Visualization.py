@@ -3,6 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import io
 
+if not st.session_state.get("authenticated"):
+    st.warning("Please login to access this page.")
+    st.stop()
+
 st.set_page_config(page_title="📈 Visualization", layout="wide")
 
 st.title("📈 Data Visualization")

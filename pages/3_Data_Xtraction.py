@@ -1,6 +1,10 @@
 import pandas as pd
 import streamlit as st
 
+if not st.session_state.get("authenticated"):
+    st.warning("Please login to access this page.")
+    st.stop()
+
 st.set_page_config(page_title="Data Xtraction", layout="wide")
 
 st.title("📊 Data Xtraction")

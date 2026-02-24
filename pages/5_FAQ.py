@@ -1,4 +1,9 @@
 import streamlit as st
+
+if not st.session_state.get("authenticated"):
+    st.warning("Please login to access this page.")
+    st.stop()
+
 st.set_page_config(page_title="Frequently asked questions", layout="wide")
 st.title("FAQ")
 
