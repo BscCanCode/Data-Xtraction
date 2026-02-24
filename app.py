@@ -1,9 +1,7 @@
 import streamlit as st
-from auth import create_users_table, register_user, login_user
+from auth import register_user, login_user
 
 st.set_page_config(page_title="Data Xtraction", layout="wide")
-
-create_users_table()
 
 # Initialize session
 if "authenticated" not in st.session_state:
@@ -12,8 +10,6 @@ if "authenticated" not in st.session_state:
 # ---------------- CUSTOM CSS ----------------
 st.markdown("""
 <style>
-
-/* Main Title */
 .main-title {
     text-align: center;
     font-size: 54px;
@@ -21,16 +17,12 @@ st.markdown("""
     margin-top: 60px;
     color: #4DB6FF;
 }
-
-/* Subtitle */
 .sub-title {
     text-align: center;
     font-size: 20px;
     color: #CFCFCF;
     margin-bottom: 50px;
 }
-
-/* Tiles */
 .tile {
     background-color: #151A22;
     padding: 30px;
@@ -40,19 +32,14 @@ st.markdown("""
     transition: 0.3s;
     min-height: 160px;
 }
-
 .tile:hover {
     border: 1px solid #4DB6FF;
     transform: translateY(-4px);
 }
-
-/* Center radio */
 section[data-testid="stRadio"] {
     display: flex;
     justify-content: center;
 }
-
-/* Footer */
 .footer {
     text-align: center;
     color: gray;
@@ -60,18 +47,15 @@ section[data-testid="stRadio"] {
     padding: 20px;
     border-top: 1px solid #2A2F3A;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
 # ================= LANDING PAGE =================
 if not st.session_state.authenticated:
 
-    # Title
     st.markdown('<div class="main-title">📊 Data Xtraction</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-title">Smart Data Cleaning • Statistical Analysis • Visualization</div>', unsafe_allow_html=True)
 
-    # Tiles
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -98,7 +82,6 @@ if not st.session_state.authenticated:
         </div>
         """, unsafe_allow_html=True)
 
-    # Message below tiles
     st.markdown("""
     <div style='text-align:center; margin-top:40px; font-size:18px; color:#CFCFCF;'>
     To explore advanced features, generate insights, and build dashboards,<br>
@@ -110,7 +93,6 @@ if not st.session_state.authenticated:
 
     st.markdown("<br><br>", unsafe_allow_html=True)
 
-    # Centered container
     center = st.columns([1,2,1])
 
     with center[1]:
@@ -119,26 +101,32 @@ if not st.session_state.authenticated:
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        # Show fields ONLY after selection
         email = st.text_input("Email")
         password = st.text_input("Password", type="password")
 
+        # ---------------- REGISTER ----------------
         if option == "Register":
             if st.button("Create Account", use_container_width=True):
-                result = register_user(email, password)
 
-                if result == "Success":
-                    st.success("Registration successful! Please login.")
+                success, message = register_user(email, password)
+
+                if success:
+                    st.success(message + " Please login.")
                 else:
-                    st.error(result)
+                    st.error(message)
 
+        # ---------------- LOGIN ----------------
         if option == "Login":
             if st.button("Login to Continue", use_container_width=True):
-                if login_user(email, password):
+
+                success, message = login_user(email, password)
+
+                if success:
                     st.session_state.authenticated = True
+                    st.success(message)
                     st.rerun()
                 else:
-                    st.error("Invalid email or password")
+                    st.error(message)
 
 # ================= AFTER LOGIN =================
 else:
