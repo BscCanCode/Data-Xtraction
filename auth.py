@@ -1,53 +1,78 @@
-import sqlite3
-import hashlib
+from supabase import create_client
+import bcrypt
 import re
 
-def create_users_table():
-    conn = sqlite3.connect("users.db")
-    c = conn.cursor()
-    c.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT UNIQUE,
-            password TEXT
-        )
-    """)
-    conn.commit()
-    conn.close()
+# ==========================
+# SUPABASE CONFIG
+# ==========================
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+SUPABASE_URL = "https://watfqsymkyigszyqpqiv.supabase.co"
+SUPABASE_KEY = "sb_publishable_nTX9vsAK5xGPO-RIrXCI8A_4NiY9ph7"
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+# ==========================
+# EMAIL VALIDATION FUNCTION
+# ==========================
 
 def is_valid_email(email):
-    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
     return re.match(pattern, email)
 
+# ==========================
+# REGISTER USER
+# ==========================
+
 def register_user(email, password):
+
+    # ---- Email Validation ----
     if not is_valid_email(email):
-        return "Invalid Email Format"
+        return False, "Invalid email format"
 
+    # ---- Password Validation ----
     if len(password) < 8:
-        return "Password must be at least 8 characters"
+        return False, "Password must be at least 8 characters long"
 
-    conn = sqlite3.connect("users.db")
-    c = conn.cursor()
-    try:
-        c.execute("INSERT INTO users (email, password) VALUES (?, ?)",
-                  (email, hash_password(password)))
-        conn.commit()
-        return "Success"
-    except:
-        return "Email already registered"
-    finally:
-        conn.close()
+    # ---- Check if user exists ----
+    existing = supabase.table("users").select("*").eq("email", email).execute()
+
+    if existing.data:
+        return False, "User already exists"
+
+    # ---- Hash Password ----
+    hashed_pw = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+    # ---- Insert User ----
+    response = supabase.table("users").insert({
+        "email": email,
+        "password": hashed_pw
+    }).execute()
+
+    if response.data:
+        return True, "Registered successfully"
+    else:
+        return False, "Registration failed"
+
+
+# ==========================
+# LOGIN USER
+# ==========================
 
 def login_user(email, password):
-    conn = sqlite3.connect("users.db")
-    c = conn.cursor()
-    c.execute("SELECT password FROM users WHERE email = ?", (email,))
-    data = c.fetchone()
-    conn.close()
 
-    if data and data[0] == hash_password(password):
-        return True
-    return False
+    # ---- Basic Validation ----
+    if not is_valid_email(email):
+        return False, "Invalid email format"
+
+    response = supabase.table("users").select("*").eq("email", email).execute()
+
+    if not response.data:
+        return False, "User not found"
+
+    user = response.data[0]
+    stored_password = user["password"]
+
+    if bcrypt.checkpw(password.encode(), stored_password.encode()):
+        return True, "Login successful"
+    else:
+        return False, "Incorrect password"
