@@ -3,3 +3,5 @@ pandas
 matplotlib
 supabase
 bcrypt
+openpyxl
+python-dotenv

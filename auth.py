@@ -1,13 +1,19 @@
 from supabase import create_client
 import bcrypt
 import re
-
-# ==========================
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+# ========================
 # SUPABASE CONFIG
 # ==========================
 
-SUPABASE_URL = "https://watfqsymkyigszyqpqiv.supabase.co"
-SUPABASE_KEY = "sb_publishable_nTX9vsAK5xGPO-RIrXCI8A_4NiY9ph7"
+env_path = Path(__file__).resolve().parent/".env"
+load_dotenv(dotenv_path=env_path)
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
