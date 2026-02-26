@@ -18,9 +18,9 @@ if file is not None:
     # Read File
     # =========================
     if file.name.endswith(".csv"):
-        df = pd.read_csv(file)
+        df = pd.read_csv(file, na_values=["?", "NA", "N/A", "null", "-"])
     else:
-        df = pd.read_excel(file)
+        df = pd.read_excel(file, na_values=["?", "NA", "N/A", "null", "-"])
 
     st.success("File uploaded successfully!")
 
