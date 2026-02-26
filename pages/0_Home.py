@@ -118,7 +118,7 @@ section[data-testid="stSidebarNav"] a:hover {
 # ================= HOME PAGE =================
 
 # Hero
-st.markdown('<div class="hero-title">📊 Data Xtraction & Analysis System</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-title"> Data Xtraction & Analysis System</div>', unsafe_allow_html=True)
 st.markdown('<div class="hero-sub">Smart Data Cleaning • Statistical Analysis • Data Visualization</div>', unsafe_allow_html=True)
 
 # What This System Does
