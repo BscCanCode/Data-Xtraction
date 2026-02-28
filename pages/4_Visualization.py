@@ -43,7 +43,7 @@ if file is not None:
 
     chart_type = st.selectbox(
         "Select Chart Type",
-        ["Line Chart", "Bar Chart", "Histogram", "Pie Chart"]
+        ["Line Chart", "Bar Chart", "Histogram", "Pie Chart", "Scatter Plot"]
     )
 
     numeric_columns = df.select_dtypes(include=["number"]).columns.tolist()
@@ -65,6 +65,8 @@ if file is not None:
         ax.set_title(f"Histogram of {column}")
         ax.set_xlabel(column)
         ax.set_ylabel("Frequency")
+
+
 
     # ---------------- Pie Chart ----------------
     elif chart_type == "Pie Chart":
@@ -88,16 +90,25 @@ if file is not None:
             st.error("No numeric columns available for plotting.")
             st.stop()
 
-        x_column = st.selectbox("Select X-axis Column", df.columns)
-        y_column = st.selectbox("Select Y-axis Column", numeric_columns)
-
         fig, ax = plt.subplots()
 
         if chart_type == "Line Chart":
+            x_column = st.selectbox("Select X-axis Column", df.columns)
+            y_column = st.selectbox("Select Y-axis Column", numeric_columns)
             ax.plot(df[x_column], df[y_column])
 
         elif chart_type == "Bar Chart":
+            x_column = st.selectbox("Select X-axis Column", df.columns)
+            y_column = st.selectbox("Select Y-axis Column", numeric_columns)
             ax.bar(df[x_column], df[y_column])
+
+        elif chart_type == "Scatter Plot":
+            x_column = st.selectbox("Select X-axis Column", numeric_columns)
+            y_column = st.selectbox("Select Y-axis Column", numeric_columns)
+            ax.scatter(df[x_column], df[y_column])
+
+            corr = df[x_column].corr(df[y_column])
+            st.info(f"Correlation between {x_column} and {y_column}: {corr:.2f}")
 
         ax.set_title(f"{chart_type} of {y_column}")
         ax.set_xlabel(x_column)
