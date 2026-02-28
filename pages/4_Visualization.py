@@ -21,9 +21,10 @@ file = st.file_uploader("Upload Cleaned File (CSV or Excel)", type=["csv", "xlsx
 if file is not None:
 
     if file.name.endswith(".csv"):
-        df = pd.read_csv(file)
+        df = pd.read_csv(file, na_values=["", "NA", "NaN", "None","N/A", "null", "NULL", "?"])
+
     else:
-        df = pd.read_excel(file)
+        df = pd.read_excel(file, na_values=["", "NA", "NaN", "None","N/A", "null", "NULL", "?"])
 
     st.success("File uploaded successfully!")
     st.dataframe(df.head())
