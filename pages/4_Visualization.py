@@ -137,7 +137,7 @@ if st.session_state.dashboard_plots:
 
             if st.button(f"Remove Plot {i+1}", key=f"remove_{i}"):
                 st.session_state.dashboard_plots.pop(i)
-                st.experimental_rerun()
+                st.rerun()
                 break
 
     if st.button("⬇ Download Full Dashboard"):
