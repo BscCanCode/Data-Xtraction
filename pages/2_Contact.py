@@ -36,9 +36,9 @@ with col1:
     st.markdown("""
     <div class="tile">
         <h3>👤 Developer</h3>
-        <p><b>Name:</b> Siddhesh Tambe</p>
+        <p><b>Name:</b> Siddhesh Sandesh Tambe</p>
         <p><b>Course:</b> TYBSc Computer Science</p>
-        <p><b>Project:</b> Data Xtraction – Interpretation & Analysis</p>
+        <p><b>Project:</b> Data Xtraction – Interpretation & Analysis of Data</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -47,7 +47,7 @@ with col2:
     st.markdown("""
     <div class="tile">
         <h3>Additional-Information</h3>
-        <p> TYBsc Project_Work-2 </p>
+        <p>TYBsc Computer Science SEMESTER-6 Project_Work-2 </p>
         <p><b>Academic Year:</b> 2025 – 2026</p>
         <p><b>Email:</b> xabc31101@gmail.com</p>
     </div>
@@ -60,6 +60,6 @@ st.info("For academic queries or project-related discussions, please contact usi
 st.markdown("""
 <hr>
 <div style="text-align:center; color:gray;">
-© 2026 Data Xtraction & Analysis System | TYBSc Computer Science Project
+© 2026 Data Xtraction | TYBSc Computer Science Project
 </div>
 """, unsafe_allow_html=True)
