@@ -140,6 +140,6 @@ else:
 # ================= FOOTER =================
 st.markdown("""
 <div class="footer">
-© 2026 Data Xtraction | TYBSc Computer Science Project
+© 2026 Data Xtraction: Analysis and Interpretation of Data | TYBSc Computer Science Project
 </div>
 """, unsafe_allow_html=True)
