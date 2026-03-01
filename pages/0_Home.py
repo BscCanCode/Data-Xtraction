@@ -204,6 +204,6 @@ st.markdown('<div class="bottom-note">⚠ To explore more features, please use t
 # Footer
 st.markdown("""
 <div class="footer">
-© 2026 Data Xtraction & Analysis System | TYBSc Computer Science Project
+© 2026 Data Xtraction | TYBSc Computer Science Project
 </div>
 """, unsafe_allow_html=True)
